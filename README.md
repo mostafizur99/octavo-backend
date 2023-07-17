@@ -1,3 +1,3 @@
-## octavo-backend Backend Server
+## Octavo Backend Server
 
 This is a node.js backend server
