@@ -81,6 +81,6 @@ export const UserService = {
   wishlistCreate,
   wishlistRemove,
   readingListCreate,
-  readingListRemove,
   readingListStatusUpdate,
+  readingListRemove,
 };
