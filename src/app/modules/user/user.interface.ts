@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 
 export type IUser = {
   name: {
@@ -8,6 +8,17 @@ export type IUser = {
   };
   password: string;
   email: string;
+  wishlist: [
+    {
+      book: Types.ObjectId;
+    }
+  ];
+  readList: [
+    {
+      book: string;
+      isFinished: boolean;
+    }
+  ];
 };
 
 export type UserModel = {
@@ -19,3 +30,8 @@ export type UserModel = {
 } & Model<IUser>;
 
 // export type UserModel = Model<IUser, Record<string, unknown>>;
+
+export type IwishList = {
+  book: Types.ObjectId;
+  isFinished?: boolean;
+};

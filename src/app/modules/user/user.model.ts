@@ -26,6 +26,34 @@ const userSchema = new Schema<IUser>(
       required: true,
       select: 0,
     },
+    wishlist: {
+      type: [
+        {
+          book: {
+            type: Schema.Types.ObjectId,
+            ref: 'Book',
+            required: true,
+          },
+        },
+      ],
+      default: [],
+    },
+    readList: {
+      type: [
+        {
+          book: {
+            type: String,
+            required: true,
+          },
+          isFinished: {
+            type: Boolean,
+            required: true,
+            default: false,
+          },
+        },
+      ],
+      default: [],
+    },
   },
   {
     timestamps: true,
