@@ -64,6 +64,22 @@ const updateBook = catchAsync(async (req: Request, res: Response) => {
   const id = req.params.id;
   const updatedData = req.body;
 
+  const user = req.user;
+  if (!user) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Unavailable user');
+  }
+  const bookData = await BookService.getSingleBook(id);
+  if (!bookData) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Book not available');
+  }
+
+  if (bookData.user.toString() !== user.userId) {
+    throw new ApiError(
+      httpStatus.BAD_REQUEST,
+      'You can edit your created book only'
+    );
+  }
+
   const result = await BookService.updateBook(id, updatedData);
 
   sendResponse<IBook>(res, {
@@ -97,6 +113,20 @@ const reviewBook = catchAsync(async (req: Request, res: Response) => {
 
 const deleteBook = catchAsync(async (req: Request, res: Response) => {
   const id = req.params.id;
+  const user = req.user;
+  if (!user) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Unavailable user');
+  }
+  const bookData = await BookService.getSingleBook(id);
+  if (!bookData) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Book not available');
+  }
+  if (bookData.user.toString() !== user.userId) {
+    throw new ApiError(
+      httpStatus.BAD_REQUEST,
+      'You can delete your created book only'
+    );
+  }
 
   const result = await BookService.deleteBook(id);
 
